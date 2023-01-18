@@ -6,3 +6,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - /home/ABTLUS/rafael.cardoso/repos/modbusModule-ioc/ioc:/root/ioc

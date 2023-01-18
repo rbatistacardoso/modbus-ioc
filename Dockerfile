@@ -14,6 +14,7 @@ RUN set -ex; \
         tzdata \
         vim \
         wget \
+        ca-certificates \
       && rm -rf /var/lib/apt/lists/*  && \
     dpkg-reconfigure --frontend noninteractive tzdata
 
@@ -34,7 +35,7 @@ LABEL br.cnpem.epics-base=${EPICS_BASE_URL}
 RUN set -x; \
     set -e; \
     mkdir -p ${EPICS_MODULES}; \
-    wget -O /opt/epics-R3.15.8/base-3.15.8.tar.gz ${EPICS_BASE_URL}; \
+    wget --no-check-certificate -O /opt/epics-R3.15.8/base-3.15.8.tar.gz ${EPICS_BASE_URL}; \
     cd /opt/epics-${EPICS_VERSION}; \
     tar -zxf base-3.15.8.tar.gz; \
     rm base-3.15.8.tar.gz; \
@@ -44,7 +45,6 @@ RUN set -x; \
 
 WORKDIR /opt/epics-${EPICS_VERSION}
 
-FROM epics-base as epics-modules
 # --- EPICS MODULES ---
 
 # asynDriver
@@ -54,7 +54,7 @@ ENV ASYN ${EPICS_MODULES}/asyn-${ASYN_VERSION}
 LABEL br.cnpem.asyn=${ASYN_URL}
 RUN set -ex; \
     cd ${EPICS_MODULES}; \
-    wget ${ASYN_URL} -O ${ASYN}.tar.gz; \
+    wget --no-check-certificate -O ${ASYN}.tar.gz ${ASYN_URL}; \
     tar -xvzf ${ASYN}.tar.gz; \
     rm -f ${ASYN}.tar.gz; \
     cd ${ASYN}; \
@@ -68,22 +68,23 @@ RUN set -ex; \
         ${ASYN}/configure/RELEASE; \
     make -j$(nproc)
 
-# # modbusDriver
-# ARG MODBUS_VERSION=R3-2
-# ARG MODBUS_URL= https://github.com/epics-modules/modbus/releases/tag/R3-2
-# LABEL br.cnpem.sscan=${MODBUS_URL}
-# ENV MODBUS ${EPICS_MODULES}/modbus-${SSCAN_VERSION}
-# RUN set -x; \
-#     set -e; \
-#     cd ${EPICS_MODULES}; \
-#     wget -O ${MODBUS}.tar.gz ${MODBUS_URL}; \
-#     tar -xvzf ${MODBUS}.tar.gz; \
-#     rm ${MODBUS}.tar.gz; \
-#     cd ${MODBUS}; \
-#     sed -i \
-#         -e '7s/^/#/' \
-#         -e '10s/^/#/' \
-#         -e '22cEPICS_BASE='${EPICS_BASE}  \
-#         configure/RELEASE; \
-#     make -j$(nproc)
-# RUN wget https://github.com/epics-modules/modbus/releases/tag/R3-2
+ARG GIT_SSL_NO_VERIFY=1
+
+# modbusDriver
+ARG MODBUS_VERSION=R3-2
+ENV MODBUS ${EPICS_MODULES}/modbus-${MODBUS_VERSION}
+RUN set -xe; \
+    cd ${EPICS_MODULES}; \
+    wget -O ${MODBUS}.tar.gz https://github.com/epics-modules/modbus/archive/refs/tags/R3-2.tar.gz; \
+    tar -xvzf ${MODBUS}.tar.gz; \
+    rm ${MODBUS}.tar.gz; \
+    cd ${MODBUS}; \
+    sed -i \
+        -e '22cEPICS_BASE='${EPICS_BASE}  \
+        -e '15cASYN='${ASYN} \
+        ${MODBUS}/configure/RELEASE; \
+    make -j$(nproc)
+
+WORKDIR /root/ioc
+
+ENTRYPOINT [ "/bin/bash", "-c", "sleep infinity" ]
