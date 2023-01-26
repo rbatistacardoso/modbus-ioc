@@ -7,9 +7,9 @@ dbLoadDatabase("dbd/modbus.dbd")
 modbus_registerRecordDeviceDriver(pdbbase)
 
 
-drvAsynIPPortConfigure("tcpPort","10.1.3.123:5050",0,0,0)
+drvAsynIPPortConfigure("tcpPort","10.0.28.107:4002",0,0,1)
 
-modbusInterposeConfig("tcpPort", 1, 0, 0)
+modbusInterposeConfig("tcpPort", 0, 0, 0)
 
 drvModbusAsynConfigure("modbusPort", "tcpPort", 1, 3, -1, 1, 4, 1000, "ABB M1M20")
 
