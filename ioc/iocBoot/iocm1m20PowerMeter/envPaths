@@ -1,2 +1,0 @@
-epicsEnvSet("MODBUS", "/opt/epics-R3.15.8/modules/modbus-R3-2")
-epicsEnvSet("IOC", "/root/ioc")

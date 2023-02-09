@@ -1,6 +1,5 @@
-TOP = ..
+TOP = ../..
 include $(TOP)/configure/CONFIG
-DIRS += $(wildcard *ioc*)
-DIRS += $(wildcard as*)
-include $(CONFIG)/RULES_DIRS
-
+ARCH = $(EPICS_HOST_ARCH)
+TARGETS = envPaths
+include $(TOP)/configure/RULES.ioc

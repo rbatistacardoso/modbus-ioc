@@ -14,6 +14,7 @@ RUN set -ex; \
         tzdata \
         vim \
         wget \
+        ser2net \
         ca-certificates \
       && rm -rf /var/lib/apt/lists/*  && \
     dpkg-reconfigure --frontend noninteractive tzdata
