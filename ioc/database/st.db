@@ -1,9 +1,235 @@
 
     record(ai, "ThreePhaseSystem") {
         field(DESC, "")
-        field(ASLO, ".1")
+        field(EGU, "V")
         field(DTYP,"asynInt32")
         field(INP,"@asyn($(PORT), 23296)")
-        field(SCAN,".1 second")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PhaseVoltageL1") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23298)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PhaseVoltageL2") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23300)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PhaseVoltageL3") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23302)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "LineVoltageL1-L2") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23304)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "LineVoltageL3-L2") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23306)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "LineVoltageL1-L3") {
+        field(DESC, "")
+        field(EGU, "V")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23308)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "ThreePhaseCurrent") {
+        field(DESC, "")
+        field(EGU, "A")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23310)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentL1") {
+        field(DESC, "")
+        field(EGU, "A")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23312)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentL2") {
+        field(DESC, "")
+        field(EGU, "A")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23314)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentL3") {
+        field(DESC, "")
+        field(EGU, "A")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23316)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentN") {
+        field(DESC, "")
+        field(EGU, "A")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23318)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "ActivePowerTotal") {
+        field(DESC, "")
+        field(EGU, "W")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23322)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "ReactivePowerTotal") {
+        field(DESC, "")
+        field(EGU, "VAR")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23330)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "ApparentPowerTotal") {
+        field(DESC, "")
+        field(EGU, "VA")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23338)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "Frequency") {
+        field(DESC, "")
+        field(EGU, "Hz")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23346)")
+        field(ASLO, "0.01")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "VoltageAngleL1") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23351)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "VoltageAngleL2") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23352)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "VoltageAngleL3") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23353)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentAngleL1") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23357)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentAngleL2") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23358)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "CurrentAngleL3") {
+        field(DESC, "")
+        field(EGU, "°")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23359)")
+        field(ASLO, "0.1")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PowerFactorTotal") {
+        field(DESC, "")
+        field(EGU, "None")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23360)")
+        field(ASLO, "0.001")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PowerFactorL1") {
+        field(DESC, "")
+        field(EGU, "None")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23361)")
+        field(ASLO, "0.001")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PowerFactorL2") {
+        field(DESC, "")
+        field(EGU, "None")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23362)")
+        field(ASLO, "0.001")
+        field(SCAN,"2 second")
+    }
+    
+    record(ai, "PowerFactorL3") {
+        field(DESC, "")
+        field(EGU, "None")
+        field(DTYP,"asynInt32")
+        field(INP,"@asyn($(PORT), 23363)")
+        field(ASLO, "0.001")
+        field(SCAN,"2 second")
     }
     

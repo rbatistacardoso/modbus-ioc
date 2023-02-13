@@ -3,7 +3,6 @@ FROM debian:11-slim as epics-deps
 # set correct timezone
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=America/Sao_Paulo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN set -ex; \
     apt update -y && \
@@ -17,22 +16,18 @@ RUN set -ex; \
         ser2net \
         ca-certificates \
       && rm -rf /var/lib/apt/lists/*  && \
-    dpkg-reconfigure --frontend noninteractive tzdata
-
+    dpkg-reconfigure --frontend noninteractive tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # --- EPICS BASE ---
-
+ARG EPICS_BASE_URL=https://github.com/epics-base/epics-base/archive/${EPICS_VERSION}.tar.gz
 ENV EPICS_VERSION R3.15.8
 ENV EPICS_HOST_ARCH linux-x86_64
 ENV EPICS_BASE /opt/epics-${EPICS_VERSION}/base
 ENV EPICS_MODULES /opt/epics-${EPICS_VERSION}/modules
 ENV PATH ${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:${PATH}
-
 ENV EPICS_CA_AUTO_ADDR_LIST YES
 
-
-ARG EPICS_BASE_URL=https://github.com/epics-base/epics-base/archive/${EPICS_VERSION}.tar.gz
-LABEL br.cnpem.epics-base=${EPICS_BASE_URL}
 RUN set -x; \
     set -e; \
     mkdir -p ${EPICS_MODULES}; \
@@ -44,15 +39,12 @@ RUN set -x; \
     cd base; \
     make -j$(nproc)
 
-WORKDIR /opt/epics-${EPICS_VERSION}
-
 # --- EPICS MODULES ---
-
+WORKDIR /opt/epics-${EPICS_VERSION}
 # asynDriver
 ARG ASYN_VERSION=R4-41
 ARG ASYN_URL=https://github.com/epics-modules/asyn/archive/${ASYN_VERSION}.tar.gz
 ENV ASYN ${EPICS_MODULES}/asyn-${ASYN_VERSION}
-LABEL br.cnpem.asyn=${ASYN_URL}
 RUN set -ex; \
     cd ${EPICS_MODULES}; \
     wget --no-check-certificate -O ${ASYN}.tar.gz ${ASYN_URL}; \
@@ -69,10 +61,9 @@ RUN set -ex; \
         ${ASYN}/configure/RELEASE; \
     make -j$(nproc)
 
-ARG GIT_SSL_NO_VERIFY=1
-
 # modbusDriver
 ARG MODBUS_VERSION=R3-2
+ARG GIT_SSL_NO_VERIFY=1
 ENV MODBUS ${EPICS_MODULES}/modbus-${MODBUS_VERSION}
 RUN set -xe; \
     cd ${EPICS_MODULES}; \
