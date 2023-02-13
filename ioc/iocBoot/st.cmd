@@ -6,15 +6,17 @@ cd ${MODBUS}
 dbLoadDatabase("dbd/modbus.dbd")
 modbus_registerRecordDeviceDriver(pdbbase)
 
-drvAsynSerialPortConfigure("serialPort1", "/dev/pts/9", 0, 0, 0)
+drvAsynSerialPortConfigure("serialPort1", "/dev/pts/14", 0, 0, 0)
 asynSetOption("serialPort1", 0, "baud", "115200")
 asynSetOption("serialPort1", 0, "bits", "8")
 asynSetOption("serialPort1", 0, "parity", "none")
 asynSetOption("serialPort1", 0, "stop", "1")
 
-modbusInterposeConfig("modbusPort1", 1, 100, 5)
+asynSetTraceIOMask("serialPort1",0,4)
 
-drvModbusAsynConfigure("modbusPort1", "serialPort1", 2, 3, -1, 2, 4, 1000, "ABB M1M20")
+modbusInterposeConfig("serialPort1", 1, 0, 2)
+
+drvModbusAsynConfigure("modbusPort1", "serialPort1", 2, 3, -1, 2, 7, 1000, "ABB M1M20")
 
 cd ${IOC}
 dbLoadRecords("st.db", "PORT = modbusPort1")
